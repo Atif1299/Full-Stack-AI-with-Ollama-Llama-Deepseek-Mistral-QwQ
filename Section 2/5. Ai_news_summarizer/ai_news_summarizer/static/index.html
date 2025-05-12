@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI News Summarizer</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+        select, button { padding: 10px; margin: 5px; width: 40%; }
+        #summary { width: 80%; margin: auto; border: 1px solid #ccc; padding: 10px; background: #f4f4f4; text-align: left; }
+        #articles { width: 80%; margin: auto; text-align: left; }
+    </style>
+</head>
+<body>
+
+    <h1>AI News Summarizer</h1>
+    <label for="category">Choose a news category:</label>
+    <select id="category">
+        <option value="technology">Technology</option>
+        <option value="business">Business</option>
+        <option value="sports">Sports</option>
+        <option value="entertainment">Entertainment</option>
+        <option value="science">Science</option>
+        <option value="health">Health</option>
+    </select>
+    <button onclick="fetchNews()">Fetch News</button>
+    
+    <h2>Summarized News:</h2>
+    <div id="summary">Your AI-generated news summary will appear here...</div>
+
+    <h2>Original Headlines:</h2>
+    <div id="articles"></div>
+
+    <script>
+        async function fetchNews() {
+            let category = document.getElementById("category").value;
+            let summaryDiv = document.getElementById("summary");
+            let articlesDiv = document.getElementById("articles");
+
+            let response = await fetch(`/fetch_news?category=${category}`);
+
+            if (!response.ok) {
+                summaryDiv.innerHTML = "<p style='color: red;'>Error: Failed to fetch news.</p>";
+                return;
+            }
+
+            let data = await response.json();
+            summaryDiv.innerHTML = `<p>${data.summary}</p>`;
+
+            let articlesHTML = "";
+            data.articles.forEach(article => {
+                articlesHTML += `<p><strong>${article.title}</strong> (${article.source.name})<br><a href="${article.url}" target="_blank">Read more</a></p>`;
+            });
+
+            articlesDiv.innerHTML = articlesHTML;
+        }
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+

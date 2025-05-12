@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Blog & Content Writer</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+        input, select, button { padding: 10px; margin: 5px; width: 80%; }
+        textarea { width: 80%; height: 300px; border: 1px solid #ccc; padding: 10px; }
+    </style>
+</head>
+<body>
+
+    <h1>AI Blog & Content Writer</h1>
+    <input type="text" id="topic" placeholder="Enter a topic (e.g., AI in marketing)">
+    <select id="style">
+        <option value="professional">Professional</option>
+        <option value="casual">Casual</option>
+        <option value="technical">Technical</option>
+        <option value="storytelling">Storytelling</option>
+    </select>
+    <button onclick="generateContent()">Generate Content</button>
+    
+    <h2>Generated Content:</h2>
+    <textarea id="output" readonly></textarea>
+
+    <script>
+        async function generateContent() {
+            let topic = document.getElementById("topic").value;
+            let style = document.getElementById("style").value;
+            let outputArea = document.getElementById("output");
+
+            let formData = new FormData();
+            formData.append("topic", topic);
+            formData.append("style", style);
+
+            let response = await fetch("/generate", {
+                method: "POST",
+                body: formData
+            });
+
+            if (!response.ok) {
+                outputArea.value = "Error: Failed to generate content.";
+                return;
+            }
+
+            let data = await response.json();
+            outputArea.value = data.content;
+        }
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Grammar & Spell Checker</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+        textarea { width: 80%; height: 150px; margin-bottom: 10px; }
+        button { padding: 10px; margin: 5px; width: 40%; }
+        #output { width: 80%; margin: auto; border: 1px solid #ccc; padding: 10px; background: #f4f4f4; }
+    </style>
+</head>
+<body>
+
+    <h1>AI Grammar & Spell Checker</h1>
+    <textarea id="text-input" placeholder="Enter text for grammar check..."></textarea><br>
+    <button onclick="proofreadText()">Check Grammar</button>
+    
+    <h2>Corrected Text:</h2>
+    <div id="output">Your corrected text will appear here...</div>
+
+    <script>
+        async function proofreadText() {
+            let inputText = document.getElementById("text-input").value;
+            let outputArea = document.getElementById("output");
+
+            let formData = new FormData();
+            formData.append("text", inputText);
+
+            let response = await fetch("/proofread", {
+                method: "POST",
+                body: formData
+            });
+
+            if (!response.ok) {
+                outputArea.innerHTML = "<p style='color: red;'>Error: Failed to process text.</p>";
+                return;
+            }
+
+            let data = await response.json();
+            outputArea.innerHTML = `<p>${data.corrected_text}</p>`;
+        }
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
