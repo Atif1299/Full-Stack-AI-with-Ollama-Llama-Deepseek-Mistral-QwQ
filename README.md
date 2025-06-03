@@ -12,6 +12,33 @@ Learn how to build, deploy, and integrate cutting-edge AI models into production
 - **Real-Time Data Processing**: Fetch live data from news, finance, and other APIs for real-time AI insights.
 - **Model Optimization**: Fine-tune prompts and improve AI response quality.
 
+## Visual Overview
+
+```mermaid
+flowchart TD
+    A0["FastAPI Application Backend
+"]
+    A1["Static File Serving
+"]
+    A2["Ollama API Interaction
+"]
+    A3["Prompt Generation
+"]
+    A4["AI Response Handling
+"]
+    A5["Frontend JavaScript Interaction
+"]
+    A6["Ollama Model Selection
+"]
+    A5 -- "Sends requests to" --> A0
+    A0 -- "Handles" --> A1
+    A0 -- "Performs" --> A3
+    A0 -- "Uses configuration" --> A6
+    A0 -- "Initiates communication with" --> A2
+    A2 -- "Returns response to" --> A0
+    A0 -- "Processes received" --> A4
+```
+
 **State of the Art Models in Ollama**:
 
 ![alt text](image-1.png)
